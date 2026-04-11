@@ -66,12 +66,12 @@ export default function OrdersPage() {
 
         if (!error && data) {
 
-            // ✅ 데이터 끝 체크 (핵심)
+            // 데이터 끝 체크 
             if (data.length < 10) {
                 setHasMore(false)
             }
 
-            // ✅ 중복 제거
+            // 중복 제거
             setOrders(prev => {
                 const newData = data.filter(
                     newItem => !prev.some(prevItem => prevItem.id === newItem.id)
@@ -92,19 +92,22 @@ export default function OrdersPage() {
         const diffTime = now - date
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
 
-        const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+        const days = ['일', '월', '화', '수', '목', '금', '토']
 
-        if (diffDays === 0) return '오늘'
-        if (diffDays === 1) return '어제'
-        if (diffDays < 7) return days[date.getDay()]
+        const formattedDate = `${date.getMonth() + 1}. ${date.getDate()}. ${days[date.getDay()]}`
 
-        return `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`
+        if (diffDays === 0) return `오늘 ${formattedDate}`
+        if (diffDays === 1) return `어제 ${formattedDate}`
+
+        return formattedDate
     }
+    
     useEffect(() => {
         document.body.style.opacity = '1'
         document.body.style.filter = 'none'
         document.body.style.backgroundColor = '#f8f9fa'
     }, [])
+    
     return (
         <div style={{
             backgroundColor: '#f8f9fa',
