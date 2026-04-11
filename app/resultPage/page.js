@@ -202,7 +202,7 @@ export default function ResultPage() {
                         boxShadow: '0 2px 6px rgba(0,0,0,0.05)'
                     }}
                 />
-                    <div style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>
+                    <div style={{ textAlign: 'center', color: '#888', marginTop: '20px', fontWeight: 'bold' }}>
                     아래 버튼을 누르면 발주가 완료됩니다!<br></br>
                 </div>
             </div>
