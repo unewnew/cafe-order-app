@@ -130,6 +130,7 @@ export default function ResultPage() {
     localStorage.removeItem('orderDraft')
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    || (navigator.maxTouchPoints > 1)
 
     if (isMobile) {
         window.location.href = 'kakaotalk://'
