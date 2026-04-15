@@ -155,53 +155,54 @@ export default function Home() {
   )?.name || ''
 
   function generateText() {
-    const missingItem = checkedItems.find(
-      (id) => !quantities[id] || quantities[id] === ''
-    )
+  const missingItem = checkedItems.find(
+    (id) => !quantities[id] || quantities[id] === ''
+  )
 
-    if (missingItem) {
-      const item = items.find(i => i.id === missingItem)
+  if (missingItem) {
+    setToast('수량을 입력해주세요!')
 
-      alert('선택한 품목의 수량을 입력해주세요!')
+    setTimeout(() => {
+      inputRefs.current[missingItem]?.focus()
+    }, 100)
 
-      setTimeout(() => {
-        inputRefs.current[missingItem]?.focus()
-      }, 100)
-
-      return
-    }
-
-    const itemMap = Object.fromEntries(items.map(i => [i.id, i]))
-    const today = new Date()
-    const formattedDate = `${today.getFullYear()}/${String(
-      today.getMonth() + 1
-    ).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`
-
-    let text = `${formattedDate} ${supplierName} 발주\n\n`
-
-    const sortedItems = [...selectedItems].sort((a, b) => {
-      return itemMap[a].name.localeCompare(itemMap[b].name)
-    })
-
-    sortedItems.forEach((id) => {
-      const item = itemMap[id]
-      if (!item) return
-
-      const qty = quantities[id]
-      if (!qty) return
-
-      text += `-${item.name} ${qty}${item.unit}\n`
-    })
-
-    if (supplierName === '공주엔엔아이') {
-      text += `\n발주요청드립니다. 감사합니다`
-    } else {
-      text += `\n모든 제품 최신 날짜로 부탁드립니다.\n감사합니다!`
-    }
-
-    localStorage.setItem('orderText', text)
-    router.push('/resultPage')
+    return
   }
+
+  // 👉 여기서 성공!
+  setToast('얍! 🎉')
+
+  const itemMap = Object.fromEntries(items.map(i => [i.id, i]))
+  const today = new Date()
+  const formattedDate = `${today.getFullYear()}/${String(
+    today.getMonth() + 1
+  ).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`
+
+  let text = `${formattedDate} ${supplierName} 발주\n\n`
+
+  const sortedItems = [...selectedItems].sort((a, b) => {
+    return itemMap[a].name.localeCompare(itemMap[b].name)
+  })
+
+  sortedItems.forEach((id) => {
+    const item = itemMap[id]
+    if (!item) return
+
+    const qty = quantities[id]
+    if (!qty) return
+
+    text += `-${item.name} ${qty}${item.unit}\n`
+  })
+
+  if (supplierName === '공주엔엔아이') {
+    text += `\n발주요청드립니다. 감사합니다`
+  } else {
+    text += `\n모든 제품 최신 날짜로 부탁드립니다.\n감사합니다!`
+  }
+
+  localStorage.setItem('orderText', text)
+  router.push('/resultPage')
+}
 
   const sortedItems = [...filteredItems].sort((a, b) => {
     const aSelected = selectedItems.includes(a.id)
@@ -510,10 +511,13 @@ export default function Home() {
         <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', padding: '16px', backgroundColor: '#f8f9fa' }}>
           <button
             onClick={() => {
-              setToast('얍!')
-              if (selectedItems.length === 0) return
-              generateText()
-            }}
+  if (selectedItems.length === 0) {
+    setToast('품목을 선택해주세요!')
+    return
+  }
+
+  generateText()
+}}
             onTouchStart={(e) => { e.currentTarget.style.opacity = 0.8; e.currentTarget.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)' }}
             onTouchEnd={(e) => { e.currentTarget.style.opacity = 1; e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.08)' }}
             onMouseDown={(e) => { e.currentTarget.style.opacity = 0.8; e.currentTarget.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)' }}
