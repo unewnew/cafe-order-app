@@ -169,8 +169,7 @@ export default function Home() {
     return
   }
 
-  // 👉 여기서 성공!
-  setToast('얍! 🎉')
+  setToast('얍!')
 
   const itemMap = Object.fromEntries(items.map(i => [i.id, i]))
   const today = new Date()
