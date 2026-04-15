@@ -126,25 +126,26 @@ export default function ResultPage() {
     }
 
     async function handleShare(text) {
-        await saveOrder()
-        localStorage.removeItem('orderDraft')
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    await saveOrder()
+    localStorage.removeItem('orderDraft')
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    if (isMobile) {
+        window.location.href = 'kakaotalk://'
 
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(() => {
-                setCopied(true)
-                setTimeout(() => setCopied(false), 2000)
-                if (isMobile) setTimeout(() => window.location.href = 'kakaotalk://', 300)
-                else alert('모바일에서 카톡 전송이 가능합니다!')
-            })
+            navigator.clipboard.writeText(text)
         } else {
             fallbackCopy(text)
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2000)
-            if (isMobile) setTimeout(() => window.location.href = 'kakaotalk://', 300)
-            else alert('모바일에서 카톡 전송이 가능합니다!')
         }
+
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    } else {
+        alert('모바일에서 카톡 전송이 가능합니다!')
     }
+}
 
 
 
