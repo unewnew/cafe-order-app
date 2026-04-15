@@ -143,6 +143,10 @@ export default function ResultPage() {
 
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
+        setTimeout(() => {
+        alert('카톡이 안 열리면 복사해서 직접 붙여넣어주세요 😄')
+    }, 1500)
+        
     } else {
         alert('모바일에서 카톡 전송이 가능합니다!')
     }
