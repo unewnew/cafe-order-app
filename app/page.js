@@ -240,7 +240,7 @@ export default function Home() {
   }, [items])
 
   useEffect(() => {
-    if (!isLoaded.current) return  // 👈 이거 핵심
+    if (!isLoaded.current) return  
 
     const draft = {
       selectedSupplier,
