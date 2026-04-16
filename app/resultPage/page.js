@@ -63,7 +63,7 @@ export default function ResultPage() {
 
         if (orderError) {
             if (orderError.code === '23505') {
-                console.log('이미 저장된 주문 👍')
+                console.log('이미 저장된 주문')
                 setAlreadySaved(true)
                 return
             }
@@ -130,20 +130,22 @@ export default function ResultPage() {
     localStorage.removeItem('orderDraft')
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    || (navigator.maxTouchPoints > 1)
+        || (navigator.maxTouchPoints > 1)
 
     if (isMobile) {
-        window.location.href = 'kakaotalk://'
-
         if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text)
+            await navigator.clipboard.writeText(text)
         } else {
             fallbackCopy(text)
         }
 
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
-   
+
+        setTimeout(() => {
+            window.location.href = 'kakaotalk://'
+        }, 200)
+
     } else {
         alert('모바일에서 카톡 전송이 가능합니다!')
     }
