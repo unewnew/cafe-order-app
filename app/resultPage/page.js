@@ -208,7 +208,7 @@ export default function ResultPage() {
                     }}
                 />
                     <div style={{ textAlign: 'center', color: '#888', marginTop: '20px', fontWeight: 'bold' }}>
-                    아래 버튼을 누르면 발주가 완료됩니다!<br></br>
+                    아래 버튼을 누르면 발주가 완료됩니다!<br></br>수량 변경은 뒤로 돌아가서 다시 선택해 주세요.
                 </div>
             </div>
 
